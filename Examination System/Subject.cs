@@ -20,7 +20,7 @@ namespace Examination_System
 		public Exam Exam { get; set; }
 		internal void CreateExam()
 		{
-			
+
 			int ExamType, Minutes, QuestionType;
 			do
 			{
@@ -29,12 +29,12 @@ namespace Examination_System
 			do
 			{
 				Console.Write("Plz Enter the Time Of Exam in Minutes: ");
-			} while (!(int.TryParse(Console.ReadLine(), out Minutes)) || Minutes < 0);
+			} while (!(int.TryParse(Console.ReadLine(), out Minutes)) || Minutes <= 0);
 			int NumberOfQuestion;
 			do
 			{
 				Console.Write("Plz Enter the Number Of Questions: ");
-			} while (!(int.TryParse(Console.ReadLine(), out NumberOfQuestion)) || NumberOfQuestion < 0);
+			} while (!(int.TryParse(Console.ReadLine(), out NumberOfQuestion)) || NumberOfQuestion <= 0);
 			Console.Clear();
 
 
@@ -46,32 +46,32 @@ namespace Examination_System
 				int AnswerOfQuestion;
 				for (int i = 0; i < NumberOfQuestion; i++)
 				{
-					
+
 					Question questionMCQ = new MCQ();
 					questionMCQ.RighrAnswer = new();
 					questionMCQ.Answers = new Answer[4];
 					Console.WriteLine(questionMCQ.Header);
 					questionMCQ.GetBodyAndMark(i);
-					choices:  for (int j = 0; j < questionMCQ.Answers.Length; j++)
+					for (int j = 0; j < questionMCQ.Answers.Length; j++)
 					{
 						do
 						{
 							Console.Write($"Enter thr choice number ({j + 1}): ");
 							questionMCQ.Answers[j] = new Answer();
 							questionMCQ.Answers[j].Text = Console.ReadLine();
-						} while (questionMCQ.Answers[j].Text == null || questionMCQ.Answers[j].Text == String.Empty);
-						if(j == questionMCQ.Answers.Length -1)
+						} while (questionMCQ.Answers[j].Text == null || !Question.CheckIfNotWhiteSpace(questionMCQ.Answers[j].Text));
+						if (j == questionMCQ.Answers.Length - 1)
 						{
-							if (questionMCQ.Answers[0].Text == questionMCQ.Answers[1].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[2].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[3].Text || 
+							if (questionMCQ.Answers[0].Text == questionMCQ.Answers[1].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[2].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[3].Text ||
 								questionMCQ.Answers[1].Text == questionMCQ.Answers[2].Text || questionMCQ.Answers[1].Text == questionMCQ.Answers[3].Text ||
 								questionMCQ.Answers[2].Text == questionMCQ.Answers[3].Text)
 							{
-                                Console.WriteLine("Enter Distencit values please");
-								goto choices;
-                            }
+								Console.WriteLine("Enter Distenct values please");
+								j = -1;
+							}
 						}
 					}
-					
+
 					do
 					{
 						Console.Write("Plz Enter the Right Answer Number: ");
@@ -96,7 +96,7 @@ namespace Examination_System
 					Console.Clear();
 					do
 					{
-						Console.Write($"Plz Enter the Type Of Question Number {i+1} (1 For True and False 2 For MCQ): ");
+						Console.Write($"Plz Enter the Type Of Question Number {i + 1} (1 For True and False 2 For MCQ): ");
 					} while ((!(int.TryParse(Console.ReadLine(), out QuestionType)) || (QuestionType != 1 && QuestionType != 2)));
 
 
@@ -122,24 +122,24 @@ namespace Examination_System
 						questionMCQ.Answers = new Answer[4];
 						Console.WriteLine(questionMCQ.Header);
 						questionMCQ.GetBodyAndMark(i);
-						ch:  for (int j = 0; j < questionMCQ.Answers.Length; j++)
+						for (int j = 0; j < questionMCQ.Answers.Length; j++)
 						{
 							do
 							{
 								Console.Write($"Enter thr choice number ({j + 1}): ");
 								questionMCQ.Answers[j] = new Answer();
 								questionMCQ.Answers[j].Text = Console.ReadLine();
-							} while (questionMCQ.Answers[j].Text == null || questionMCQ.Answers[j].Text==String.Empty);
+							} while (questionMCQ.Answers[j].Text == null || !Question.CheckIfNotWhiteSpace(questionMCQ.Answers[j].Text));
 
-							if (j == questionMCQ.Answers.Length -1)
+							if (j == questionMCQ.Answers.Length - 1)
 							{
 								if (questionMCQ.Answers[0].Text == questionMCQ.Answers[1].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[2].Text || questionMCQ.Answers[0].Text == questionMCQ.Answers[3].Text ||
 														questionMCQ.Answers[1].Text == questionMCQ.Answers[2].Text || questionMCQ.Answers[1].Text == questionMCQ.Answers[3].Text ||
 														questionMCQ.Answers[2].Text == questionMCQ.Answers[3].Text)
 								{
-									Console.WriteLine("Enter Distencit values please");
-									goto ch;
-								} 
+									Console.WriteLine("Enter Distenct values please");
+									j = -1;
+								}
 							}
 						}
 						do
